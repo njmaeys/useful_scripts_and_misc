@@ -92,7 +92,7 @@ alias gke-prod-trickster='gcloud config configurations activate cyderes-prod && 
 ###########################################################################################################
 # GITHUB
 ###########################################################################################################
-export GITHUB_ACCESS_TOKEN=08728362e4be215ccfaff9327df58c7fe3b49f30
+export GITHUB_ACCESS_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 export GITHUB_USERNAME=njmaeys
 
 ###########################################################################################################
