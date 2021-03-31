@@ -4,14 +4,25 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+ZSH_DISABLE_COMPFIX="true"
 autoload -Uz compinit
 compinit
+
+# Set history search
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
+# Set history to be more
+alias history="history 1"
+
+# Set ls colors
+alias ls="ls -G"
 
 # if zsh does not load again for some reason run the following
 # chsh -s /bin/zsh
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/nate.maeys/.oh-my-zsh"
+export ZSH="/Users/Nate.Maeys/.oh-my-zsh"
 
 ###########################################################################################################
 # JAVA
@@ -31,10 +42,15 @@ alias python="python3"
 alias pip2="pip install --user " $1
 
 # virtualenv
-export PATH=$PATH:/Users/nate.maeys/Library/Python/3.8/bin
+export PATH=$PATH:/Users/Nate.Maeys/Library/Python/3.8/bin
 
 # remove pyc files
 alias pyc="rm **/*.pyc"
+###########################################################################################################
+
+###########################################################################################################
+# HELPFUL FUNCTIONS AND SHORTCUTS
+alias OA=POS
 ###########################################################################################################
 
 ###########################################################################################################
@@ -75,13 +91,6 @@ export GITHUB_USERNAME=njmaeys
 
 unsetopt autocd
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
 ###########################################################################################################
 
 ###########################################################################################################
@@ -89,11 +98,13 @@ source $ZSH/oh-my-zsh.sh
 # Add a location to PATH evn that I can actually modify
 export PATH="$PATH:$HOME/tools"
 # Add pip3 installation path
-export PATH="$PATH:/Users/nate.maeys/Library/Python/3.7/bin"
+export PATH="$PATH:/Users/Nate.Maeys/Library/Python/3.7/bin"
 # Add go bin to path
-export PATH="$PATH:/Users/nate.maeys/go/bin"
+export PATH="$PATH:/Users/Nate.Maeys/go/bin"
 # Add /usr/local/sbin
 export PATH="$PATH:/usr/local/sbin"
+# Gcloud sdk
+export PATH="$PATH:/Users/Nate.Maeys/google-cloud-sdk/bin"
 ###########################################################################################################
 
 ###########################################################################################################
@@ -136,8 +147,8 @@ alias salty='k exec -it -n salt saltmaster-docker-0 -- /bin/bash'
 ###########################################################################################################
 # Terraform Aws
 terraformDevCredsAws() {
-  export AWS_ACCESS_KEY_ID="xxxxxxxxxxxxxx"
-  export AWS_SECRET_ACCESS_KEY="xxxxxxxxxxxxxx"
+  export AWS_ACCESS_KEY_ID=""
+  export AWS_SECRET_ACCESS_KEY=""
 
   terraform workspace select development
   terraform workspace list
@@ -149,10 +160,10 @@ alias terraformDevAws=terraformDevCredsAws
 ###########################################################################################################
 # Terraform Azure
 terraformDevCredsAzure() {
-  export ARM_CLIENT_ID="xxxxxxxxxxxxxx"
-  export ARM_CLIENT_SECRET="xxxxxxxxxxxxxx"
-  export ARM_SUBSCRIPTION_ID="xxxxxxxxxxxxxx"
-  export ARM_TENANT_ID="xxxxxxxxxxxxxx"
+  export ARM_CLIENT_ID=""
+  export ARM_CLIENT_SECRET=""
+  export ARM_SUBSCRIPTION_ID=""
+  export ARM_TENANT_ID=""
 
   terraform workspace select development
   terraform workspace list
@@ -164,11 +175,9 @@ alias terraformDevAzure=terraformDevCredsAzure
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/nate.maeys/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nate.maeys/google-cloud-sdk/path.zsh.inc'; fi
-
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/nate.maeys/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nate.maeys/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/Nate.Maeys/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/Nate.Maeys/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="$PATH:/Users/Nate.Maeys/google-could-sdk/bin"
 
 ###########################################################################################################
 # Things that don't need an alias but i dont want to lose
@@ -176,11 +185,39 @@ if [ -f '/Users/nate.maeys/google-cloud-sdk/completion.zsh.inc' ]; then . '/User
 # Check the oom reaper for a given salt key
 # salt -L efm-01 cmd.run "journalctl | grep -i oom_reaper"
 
+
+###########################################################################################################
+# SPARK CONFIGURATIONS
+## Spark was not playing nicely and this fixed it
+#export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+#
+##spark 2.4.3
+#export SPARK_HOME="/Users/nathan.maeys/spark-2.4.3"
+#export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.7-src.zip:$PYTHONPATH
+#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+#export PATH=$PATH":/Users/nathan.maeys/spark-2.4.3/bin"
+#export PATH=$PATH":$HOME/Library/Python/3.7/bin/"
+#export PYSPARK_PYTHON="/usr/local/bin/python3"
+
+forgetCluster() {
+	# use the ip for var
+	ssh-keygen -R $1
+}
+
+alias forget_cluster=forgetCluster
+
+emrSsh() {
+	# $1 is user
+	# $2 is ip
+	# $3 is pem file
+	ssh-keygen -R $2
+	ssh -i ~/.ssh/$3.pem $1@$2
+}
+alias emr_ssh=emrSsh
+
 POS() {
 	echo piece of shit
 }
-
-alias OA=POS
 
 ###########################################################################################################
 # Virtualization
@@ -195,8 +232,11 @@ export PATH=$PATH:/Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\
 
 # maybe put some kube info into the command prompt at some point
 # https://github.com/jonmosco/kube-ps1
+#
 
 source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
