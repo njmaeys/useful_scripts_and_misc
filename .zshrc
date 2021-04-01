@@ -76,8 +76,6 @@ alias gke-prod-trickster='gcloud config configurations activate cyderes-prod && 
 
 # Rancher kubectl
 alias rk='rancher kubectl'
-# admin
-# x#$?GrGsBHlVQosu
 ###########################################################################################################
 
 ###########################################################################################################
