@@ -4,33 +4,11 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-ZSH_DISABLE_COMPFIX="true"
 autoload -Uz compinit
 compinit
 
-# Set history search
-bindkey "^[[A" history-search-backward
-bindkey "^[[B" history-search-forward
-
-# Set history to be more
-alias history="history 1"
-
-# Set ls colors
-alias ls="ls -G"
-
-# if zsh does not load again for some reason run the following
-# chsh -s /bin/zsh
-
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/Nate.Maeys/.oh-my-zsh"
-
-###########################################################################################################
-# JAVA
-#export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home"
-
-# set vim keybindings in bash
-bindkey -v
-###########################################################################################################
 
 ###########################################################################################################
 # PYTHON
@@ -47,12 +25,6 @@ export PATH=$PATH:/Users/Nate.Maeys/Library/Python/3.8/bin
 # remove pyc files
 alias pyc="rm **/*.pyc"
 ###########################################################################################################
-
-###########################################################################################################
-# HELPFUL FUNCTIONS AND SHORTCUTS
-alias OA=POS
-###########################################################################################################
-
 ###########################################################################################################
 # KUBERNETES
 alias k=kubectl
@@ -77,20 +49,16 @@ alias gke-prod-trickster='gcloud config configurations activate cyderes-prod && 
 # Rancher kubectl
 alias rk='rancher kubectl'
 ###########################################################################################################
-
 ###########################################################################################################
 # GITHUB
 export GITHUB_USERNAME=njmaeys
 ###########################################################################################################
-
 ###########################################################################################################
 # ZHS THINGS
-#ZSH_THEME="cloud"
+ZSH_THEME="cloud"
 
 unsetopt autocd
-
 ###########################################################################################################
-
 ###########################################################################################################
 # PATH THINGS
 # Add a location to PATH evn that I can actually modify
@@ -104,12 +72,10 @@ export PATH="$PATH:/usr/local/sbin"
 # Gcloud sdk
 export PATH="$PATH:/Users/Nate.Maeys/google-cloud-sdk/bin"
 ###########################################################################################################
-
 ###########################################################################################################
 # GoLang THINGS
 export GOPATH=~/go
 ###########################################################################################################
-
 ###########################################################################################################
 # GOOGLE THINGS
 googleCreds() {
@@ -131,17 +97,14 @@ googleCreds() {
 
 alias gcreds=googleCreds
 ###########################################################################################################
-
 ###########################################################################################################
 # Raspberry Pi
 alias pi='ssh -i ~/.ssh/pi_rsa pi@192.168.86.34'
 ###########################################################################################################
-
 ###########################################################################################################
 # Salt
 alias salty='k exec -it -n salt saltmaster-docker-0 -- /bin/bash'
 ###########################################################################################################
-
 ###########################################################################################################
 # Terraform Aws
 terraformDevCredsAws() {
@@ -154,7 +117,6 @@ terraformDevCredsAws() {
 
 alias terraformDevAws=terraformDevCredsAws
 ###########################################################################################################
-
 ###########################################################################################################
 # Terraform Azure
 terraformDevCredsAzure() {
@@ -169,7 +131,7 @@ terraformDevCredsAzure() {
 
 alias terraformDevAzure=terraformDevCredsAzure
 ###########################################################################################################
-
+###########################################################################################################
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
@@ -182,41 +144,10 @@ export PATH="$PATH:/Users/Nate.Maeys/google-could-sdk/bin"
 ###########################################################################################################
 # Check the oom reaper for a given salt key
 # salt -L efm-01 cmd.run "journalctl | grep -i oom_reaper"
-
-
 ###########################################################################################################
-# SPARK CONFIGURATIONS
-## Spark was not playing nicely and this fixed it
-#export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-#
-##spark 2.4.3
-#export SPARK_HOME="/Users/nathan.maeys/spark-2.4.3"
-#export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.7-src.zip:$PYTHONPATH
-#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-#export PATH=$PATH":/Users/nathan.maeys/spark-2.4.3/bin"
-#export PATH=$PATH":$HOME/Library/Python/3.7/bin/"
-#export PYSPARK_PYTHON="/usr/local/bin/python3"
-
-forgetCluster() {
-	# use the ip for var
-	ssh-keygen -R $1
-}
-
-alias forget_cluster=forgetCluster
-
-emrSsh() {
-	# $1 is user
-	# $2 is ip
-	# $3 is pem file
-	ssh-keygen -R $2
-	ssh -i ~/.ssh/$3.pem $1@$2
-}
-alias emr_ssh=emrSsh
-
 POS() {
 	echo piece of shit
 }
-
 ###########################################################################################################
 # Virtualization
 ###########################################################################################################
@@ -228,13 +159,11 @@ export PATH=$PATH:/Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\
 # EOF Things i may need/want
 ###########################################################################################################
 
-# maybe put some kube info into the command prompt at some point
-# https://github.com/jonmosco/kube-ps1
-#
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
 
+source $ZSH/oh-my-zsh.sh
 source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
-source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
