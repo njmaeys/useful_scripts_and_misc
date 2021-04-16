@@ -1,0 +1,168 @@
+Communications and Network Security
+
+Course on Pluralsight
+https://app.pluralsight.com/library/courses/communications-network-security/table-of-contents
+
+
+###################################
+Open Systems Interconnect (OSI)
+
+Describe process of communication, define steps/processes (conceptual model).
+
+Layering and Encapsulation
+  - wrap data from other layers to carry forward
+    - often wrapped with headers and footers to ensure accurate communication
+  - each layer has it's own specific function
+  - each layer communicates with the layer above and below it
+
+  - Mike wants to talk with Sharon
+    - Mike application to send message
+    - email engine (ie; outlook)
+    - email sent to APPLICATION LAYER
+      - knows that sharons system needs to do something with it
+      - mikes side puts on a header to define it as an email
+        - this allows sharons side to know that it goes to email
+    - sent to PRESENTATION LAYER
+      - formatting, compression, ...
+      - another headder added so it knows what to do
+    - sent to SESSION LAYER
+      - no real session in an email
+      - but ie; online banking would have session identifiers
+        - ensure someone logs in and has identifiers to know who has what
+        - gets a session identifier
+    - TRANSPORT LAYER
+      - TCP/UDP is responsible for sending of traffic and error handling
+      - a transport header is put here
+    - NETWORK LAYER
+      - logical adressing ip addressing
+    - DATALINK LAYER
+      - passes to next adjacent point
+      - data link header sends to next available access point
+        - laptop to router ie;
+        - links two connected devices
+    - PHYSICAL LAYER
+      - then sends it back to DATALINK LAYER
+      - removes the header
+      - repeat until gets to Sharons machine
+      - then it is sent up the chain removing headers along the way
+
+###################################
+TCP/IP Model
+
+This is usally what we use
+
+Each layer supports multiple protocols
+Works on almost any device
+
+Application
+  - Ensure data is in correct format
+  - Session management
+Transport
+  - Host to host layer
+  - Manage communications internal
+Internet
+  - Traffic across network segments
+Network Access
+  - Sums DataLink and Pysical
+
+###################################
+Physical layer
+
+Some physical medium providing connection between devices
+  - cable, fiber, optical, satellite, ...
+  - transmit messages somehow
+    - light pulse, electric pulse, ...
+  - analog vs digital
+
+Patch panels and wiring closets
+
+Data Link Layer
+  - pysical media
+    - media access control (mac) adress
+    - network interface card (nic)
+  - logical link control (llc)
+    - interface between logical and physical
+      - make sure things going out are in correct format
+      - converts things back into correct format
+
+###################################
+Network
+  - IP
+    - V4 and V6 (better security and more addresses)
+    - subnetting allow isolation and control of network
+  - ICMP
+  - IGMP
+  - IP Management
+    - internal assignment of IP addresses
+    - 10.x.x.x internal addressing is common
+      - 16mil addresses we can send
+    - 172.31.x.x
+      - common used
+    - 192.168.x.x
+      - common used
+    - Usually internal and non routing
+
+Transport
+  - End-to-end transport between hosts
+  - TCP connection oriented
+    - uses packets and ensures stuff is sent
+  - UDP connectionless protocol
+    - just sends info and runs doesn't hang around
+  - common ports
+    - 20/21 ftp
+    - 22 ssh
+    - 25 smtp (email)
+    - 53 dns
+    - 80 http
+    - 110 POPv3 (post office protocol)
+    - 443 tls (http over tls connection)
+
+###################################
+Session
+  - maintains logical connection between two devices
+    - ie; my machine with a DB
+  - enable services between hosts
+  - remote user authentication
+    - RADIUS
+    - gateway device verifies with that radius
+      - password encryption and only used udp
+    - TACACS
+      - centralized authentication for users
+      - uses tcp instead of udp
+      - encrypts the entire communication
+
+Presentation
+  - ensures things are formatted properly
+
+Application
+  - what we actually interact with
+  - not actually the application itself
+    - facilitates communication between peer applications
+  - many protocols used here 
+    - ftp, dns, http, ...
+  - synchronous messaging
+    - im messaging (slack, discord, ...)
+  - asynchronous messaging
+    - email (smtp)
+
+###################################
+
+###################################
+
+###################################
+
+###################################
+
+###################################
+
+
+
+
+
+
+
+
+
+
+
+
