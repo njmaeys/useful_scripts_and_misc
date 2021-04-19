@@ -1,9 +1,8 @@
-Communications and Network Security
+Pluralsight network courses
 
-Course on Pluralsight
+
+###################################
 https://app.pluralsight.com/library/courses/communications-network-security/table-of-contents
-
-
 ###################################
 Open Systems Interconnect (OSI)
 
@@ -11,40 +10,40 @@ Describe process of communication, define steps/processes (conceptual model).
 
 Layering and Encapsulation
   - wrap data from other layers to carry forward
-    - often wrapped with headers and footers to ensure accurate communication
+  - often wrapped with headers and footers to ensure accurate communication
   - each layer has it's own specific function
   - each layer communicates with the layer above and below it
 
   - Mike wants to talk with Sharon
-    - Mike application to send message
-    - email engine (ie; outlook)
-    - email sent to APPLICATION LAYER
-      - knows that sharons system needs to do something with it
-      - mikes side puts on a header to define it as an email
-        - this allows sharons side to know that it goes to email
-    - sent to PRESENTATION LAYER
-      - formatting, compression, ...
-      - another headder added so it knows what to do
-    - sent to SESSION LAYER
-      - no real session in an email
-      - but ie; online banking would have session identifiers
-        - ensure someone logs in and has identifiers to know who has what
-        - gets a session identifier
-    - TRANSPORT LAYER
-      - TCP/UDP is responsible for sending of traffic and error handling
-      - a transport header is put here
-    - NETWORK LAYER
-      - logical adressing ip addressing
-    - DATALINK LAYER
-      - passes to next adjacent point
-      - data link header sends to next available access point
-        - laptop to router ie;
-        - links two connected devices
-    - PHYSICAL LAYER
-      - then sends it back to DATALINK LAYER
-      - removes the header
-      - repeat until gets to Sharons machine
-      - then it is sent up the chain removing headers along the way
+  - Mike application to send message
+  - email engine (ie; outlook)
+  - email sent to APPLICATION LAYER
+    - knows that sharons system needs to do something with it
+    - mikes side puts on a header to define it as an email
+    - this allows sharons side to know that it goes to email
+  - sent to PRESENTATION LAYER
+    - formatting, compression, ...
+    - another headder added so it knows what to do
+  - sent to SESSION LAYER
+    - no real session in an email
+    - but ie; online banking would have session identifiers
+    - ensure someone logs in and has identifiers to know who has what
+    - gets a session identifier
+  - TRANSPORT LAYER
+    - TCP/UDP is responsible for sending of traffic and error handling
+    - a transport header is put here
+  - NETWORK LAYER
+    - logical adressing ip addressing
+  - DATALINK LAYER
+    - passes to next adjacent point
+    - data link header sends to next available access point
+    - laptop to router ie;
+    - links two connected devices
+  - PHYSICAL LAYER
+    - then sends it back to DATALINK LAYER
+    - removes the header
+    - repeat until gets to Sharons machine
+    - then it is sent up the chain removing headers along the way
 
 ###################################
 TCP/IP Model
@@ -71,65 +70,65 @@ Physical layer
 Some physical medium providing connection between devices
   - cable, fiber, optical, satellite, ...
   - transmit messages somehow
-    - light pulse, electric pulse, ...
+  - light pulse, electric pulse, ...
   - analog vs digital
 
 Patch panels and wiring closets
 
 Data Link Layer
   - pysical media
-    - media access control (mac) adress
-    - network interface card (nic)
+  - media access control (mac) adress
+  - network interface card (nic)
   - logical link control (llc)
-    - interface between logical and physical
-      - make sure things going out are in correct format
-      - converts things back into correct format
+  - interface between logical and physical
+    - make sure things going out are in correct format
+    - converts things back into correct format
 
 ###################################
 Network
   - IP
-    - V4 and V6 (better security and more addresses)
-    - subnetting allow isolation and control of network
+  - V4 and V6 (better security and more addresses)
+  - subnetting allow isolation and control of network
   - ICMP
   - IGMP
   - IP Management
-    - internal assignment of IP addresses
-    - 10.x.x.x internal addressing is common
-      - 16mil addresses we can send
-    - 172.31.x.x
-      - common used
-    - 192.168.x.x
-      - common used
-    - Usually internal and non routing
+  - internal assignment of IP addresses
+  - 10.x.x.x internal addressing is common
+    - 16mil addresses we can send
+  - 172.31.x.x
+    - common used
+  - 192.168.x.x
+    - common used
+  - Usually internal and non routing
 
 Transport
   - End-to-end transport between hosts
   - TCP connection oriented
-    - uses packets and ensures stuff is sent
+  - uses packets and ensures stuff is sent
   - UDP connectionless protocol
-    - just sends info and runs doesn't hang around
+  - just sends info and runs doesn't hang around
   - common ports
-    - 20/21 ftp
-    - 22 ssh
-    - 25 smtp (email)
-    - 53 dns
-    - 80 http
-    - 110 POPv3 (post office protocol)
-    - 443 tls (http over tls connection)
+  - 20/21 ftp
+  - 22 ssh
+  - 25 smtp (email)
+  - 53 dns
+  - 80 http
+  - 110 POPv3 (post office protocol)
+  - 443 tls (http over tls connection)
 
 ###################################
 Session
   - maintains logical connection between two devices
-    - ie; my machine with a DB
+  - ie; my machine with a DB
   - enable services between hosts
   - remote user authentication
-    - RADIUS
-    - gateway device verifies with that radius
-      - password encryption and only used udp
-    - TACACS
-      - centralized authentication for users
-      - uses tcp instead of udp
-      - encrypts the entire communication
+  - RADIUS
+  - gateway device verifies with that radius
+    - password encryption and only used udp
+  - TACACS
+    - centralized authentication for users
+    - uses tcp instead of udp
+    - encrypts the entire communication
 
 Presentation
   - ensures things are formatted properly
@@ -137,28 +136,109 @@ Presentation
 Application
   - what we actually interact with
   - not actually the application itself
-    - facilitates communication between peer applications
+  - facilitates communication between peer applications
   - many protocols used here 
-    - ftp, dns, http, ...
+  - ftp, dns, http, ...
   - synchronous messaging
-    - im messaging (slack, discord, ...)
+  - im messaging (slack, discord, ...)
   - asynchronous messaging
-    - email (smtp)
+  - email (smtp)
 
+###################################
+Protocol selection
+
+understood format for communcation with its own way of communicating
+
+we have to recognize weaknesses in each protocol and how to combat
+
+RFCs
+  - request for comments
+
+ARP (adress resolution protocol)
+  - manages mac to ip address
+  - connect physical to logical
+  - can be "poisoned" and sent to wrong device
+
+ICMP (internet control messaging protocol)
+  - ensure connectivity between devices
+
+IGMP (internet group management protocol)
+  - send transmition to multiple locations
+
+IP (internet protocol)
+  - IPv4 32 bit logical addressing
+    - four octets
+  - built for communication 
+    - easy for spoofing
+  - tons of headders for the communication
+    - ttl defines allowed number of hops before it "dies"
+      - packet is dropped so it no longer keeps seeking dest
+  - source/dest ip addresses
+
+  - IPv6 128 bit addressing
+    - IPSec designed with security in mind
+      - ensures origin has not been spoofed
+    - header can vary in length
+
+Routing Protocols
+  - how and where to send traffic
+
+TCP
+  - cnnection oriented
+  - fully duplex (can send and recieve)
+  - windowing, ensuring only certain amt of traffic sent/recieve before movign on
+    - doesn't overwhelm
+  - headers 
+    - source and dest port
+    - sequence and acknowledgement
+      - host to host compare and validate sent info was recieved
+
+UDP
+  - connectionless, blurts out info and moves on
+  - sends info but doesn't check if it was understood
+  - no replay protection
+
+HTTP/HTTPS
+
+###################################
+Network Encryption
+
+TLS
+  - estblish secure connection
+  - 2 parts to this
+    - TLS Handshake protocol
+    - TLS Record protocol
+  - doesn't care what the application protocol is
+  - how it works
+    - client --> bank wants to connect over http
+    - bank --> sends certificate to client
+      - this provides public key of bank so client knows the the pub key is pub key of bank
+      - the key was provided by a CA (trusted)
+    - client checks signature of CA and expiry, checks that url in cert matches
+      - all checks out? then it hasn't been altered or expired
+    - client then chooses a key, initializaion vector (IV) and HMAC value
+
+###################################
+IPSec
+  - Sets network layer, end to end encryption
+  - Internet Key Exchange
+    - Use certificates
+  - Authentication Header (AH)
+    - Proof of who it comes from
+    - Validates that the ip it came from is true
+  - VPN
+    - Extend private network through public network
+    - Virtual point to point connection
+
+
+
+
+
+###################################
+https://app.pluralsight.com/library/courses/comptia-network-plus-networking-concepts/table-of-contents
 ###################################
 
 ###################################
-
-###################################
-
-###################################
-
-###################################
-
-
-
-
-
 
 
 
