@@ -231,15 +231,242 @@ IPSec
     - Virtual point to point connection
 
 
-
-
-
 ###################################
 https://app.pluralsight.com/library/courses/comptia-network-plus-networking-concepts/table-of-contents
 ###################################
+OSI Model
+
+Open Systems Interconnect
+
+Layers of OSI
+
+Physical
+  - device connection
+  - cables (which can vary in type, ie; twisted pair, coax, fiber, ...)
+  - all of the protocols that ensure the cables are correct and understood
+Data Link
+  - protocols to move traffic across the line
+    - ie; ethernet protocol (mainly this one)
+  - move traffic from one device to another (hops)
+Network
+  - IP Addressing allow messages to go across longer distances (unique address for all devices)
+  - IP Routing allo sending of data from IP to IP (end to end communication)
+Transpot
+  - Need a session between the client and the server
+  - TCP (Transmission Control Protocol)
+Session and Presentation (rarely used and not as important in modern world)
+  - Presentation ASCII (hexidecimal value of all characters)
+    - Translation between hexideciamal encoding types
+  - Session 
+Application
+  - ie; HTTP(s) to transfer the protocol from server into browser
 
 ###################################
+Protocols and Port Numbers
 
+Application Layer (7)
+Transferring Data
+  - client server model
+  - all of these have Transport Layer (4) protocol 
+    - http 80 and https 443
+HTTP(s)
+  - sending data in specific format so web browser can transfer and translate
+  - client software is a browser here
+  - server is running server software for websites ie; Apache, Nginx, ...
+FTP and those flavors
+  - sending files around and there is client/server software to help with this
+  - FTP 20, 21 - sFTP 22 - TFTP 69 - SMB 445
+Email (many diff protocols)
+  - POP3 - IMAP - SMTP
+    - SMTP, client to server and routed from server to other client
+Authentication
+  - LDAP (Lightweight Directory Access Protocol)
+    - Active Directory (server side) Windows 10 (client side)
+  - DHCP (Dynamic Host Configuration Protocol)
+    - Automatically tell the info needed to connect to a network
+DNS (Domain Name System)
+  - Allows use of simple names to communicate with the IP address
+  - DNS Server 8.8.8.8 (Google DNS Server)
+    - message sent to DNS server on client ie; /etc/resolv.conf
+    - 8.8.8.8 returns the IP address of the DNS name requested
+  - nslookup gives us the IP of a resolved DNS entry
+    - nslookup google.com
+Network Time Protocol (NTP)
+  - Auto configure all times on clients with times on server
+  - Usually publically hosted and in UTC (Coordinated Universal Time)
+    - North to South line passes through Greenwich England (Prime Merridian)
+      - 00:00 is midnight at this location
+Network Management Protocol
+  - Tlenet (23) and SSH (22)
+
+###################################
+Transport Layer (4)
+TCP and UDP
+TCP
+  - Need to establish session between client and server
+  - Phone Convo
+    - need to pick up phone, wait for dial tone, dial phone number, rings, waits for ansewr "hello", session established
+  - 3-way handshake
+    - SYN message from client to web server
+    - SYN-ACK Server then sends a reply SYN-ACK
+    - ACK Client sends an ACK
+    - Each of these changes the state
+    - Once session is established we can send other things like http
+    - If anything goes wrong the client/server can send an additional request for more info
+  - 4-way disconnect
+    - FIN from server
+    - FIN-ACK got the finish from client
+    - FIN from client
+    - FIN-ACK from server
+    - RST forces the TCP session to hang up and prevents further communication
+UDP
+  - User Datagram Protocol
+  - Wraps up data and sends request for data
+  - Server sends data
+  - This is all sent without acknowledgement of sent request or sent response
+    - Data can be lost
+  - Very efficient for small data packets
+
+###################################
+Intro to Bnary and Hexideciamal
+Network Layer
+Binary 101
+  - 1 or 0 on or off
+  - placeholders
+    - 00000000 = 0
+    - 00000001 = 1
+    - 00000010 = 2
+    - 00000011 = 3
+    - ... so on
+Binary to Decimal
+  - 128s 64s 32s 16s 8s 4s 2s 1s
+  - 11000000 = 128 + 64 + 0 + 0 + 0 + 0 + 0 + 0 = 192
+Hexadecimal
+  - every hexideciamal value converts to 4 binary bits
+  - 0 to 16
+    - 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,10
+
+###################################
+Intro to IP Addressing
+Network Layer (3)
+0-255.0-255.0-255.0-255
+  - Network portion 0.0.0.x
+    - zipcode
+  - Host portion x.x.x.0
+    - street address
+IP address construction
+  - converted to decimal from binary
+  - 32 bit value broken into 4 octet (8bits long)
+    - 203.0.113.10
+    - 11001011 00000000 01110001 00001010
+IP Address types
+  - Network address 
+    - identifier for a group of devices, IP Address in a system
+    - range of IP addresses 
+    - if all 0 in host portion then it is network
+  - Broadcast address
+    - identifier for all devices on network
+    - if all 1 in the host portion then it is broadcast
+  - Host address
+    - identifies unique device on a network
+    - anything except all 0 or all 1 in host portion
+CIDR Notation
+  - 203.0.113.10
+  - 255.255.255.0
+    - /24 (number of bits in the network portion)
+    - there are 24 1s in the mask
+    - 203.0.113.10/24
+
+###################################
+Subnetting Networks
+Breaking networks into smaller networks
+10.0.0.0/8 (private IP range)
+10.0.0.0 -> 10.2555.255.255
+10.0.10.0
+  - host address on 10.0.0.0/8 network
+  - could move subnetmask to /24 position
+    - 10.0.10.0/24 can now be a network address
+    - 10.0.10.0 -> 10.0.10.255
+      - makes a more manageable rage of IP address in this subnet
+
+###################################
+Intro to IPv6
+It big
+  - i glossed over bc this doesn't seem super important to my goals of learning yet
+
+###################################
+Ethernet and Switching
+Not all that interested in this topic
+
+###################################
+Switcing Features
+Not all that interested in this topic
+
+###################################
+IP Routing
+Network Layer (3)
+End to end Communication (client to server round trip)
+Basic Network
+  - PC -> switch -> router -> internet
+  - want devices to send traffic locally and over internet
+IP Packet (header plus data)
+  - specify source/dest IP
+  - TTL (128, can hit 128 routers before it is tossed away)
+    - prevents loops at layer 3
+  - Headers for the info being sent and other
+  - ARP (address resolution protocol)
+    - only works for local area network
+    - allows us to get MAC address (layer 2) of destination
+      - message goes to ALL other devices in network with dest IP 
+      - the machine that has that IP responds and sends back the MAC address
+Default Gateway
+  - Gateway == Router
+  - place where PC sends traffic when it doesn't know how to reach destination
+    - destination is in diff subnet than our machine
+  - Routers throw away ARP messages (doesn't forward layer 2 request)
+  - ARP the default gateway
+  - Requests need to hop through routers
+    - The routers consult their IP tables to send data along
+Can use tracert to view the route traffic takes
+  - see the IP addresses hit during the trip
+
+###################################
+Network Services
+Network Topologies
+  - Local Area Network (LAN)
+    - All devices connected to one router including the router
+    - Wireless Local Area Network (WLAN)
+      - still local area but introduction of wireless router
+    - May have many in a given building
+    - To connect multiple buildings you need a Wide Area Network (WAN)
+Network Address Translation
+  - Any org/home/user can use internal network using specific address ranges
+    - All of these are private addresses
+    - 10.0.0.0/8 - 172.16.0.0/12 - 192.168.0.0/16
+    - internet throws away these IP addresses and communication cannot use these
+Port Forwarding
+  - ie; info coming in from port 80 sends to port 8080 on internal device
+Access Control List
+  - On router you can deny specific destination IP addresses
+    - Tosses out the packets
+Traffic Shaping
+  - Give priority to some traffic
+Dynamic Host Configuration Protocol (DHCP)
+  - Provide IP addresses to internal devices in a network
+  - Often a home router has this built in
+  - Larger enterprises often has a server doing that configuration
+  - DHCP Lease typtically only good for 7 days
+    - Computer asks for the IP address 3.5 days in requesting for the IP address again
+DNS Hierarchy Uniform Resource Locater (URL)
+  - Top Level Domain (TLD)
+    - .com .edu .org .net ...
+  - Second Level Domain 
+    - The domain name ie; pluralsight in pluralsight.com
+  - Third level Domain
+    - Hostname ie; www
+    - doesn't have to be www immediately, this is just to define hierarchy 
+Reverse DNS Lookup
+  - What is the domain for a given IP address
 
 
 
