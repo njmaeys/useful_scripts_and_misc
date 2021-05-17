@@ -3,10 +3,13 @@ import json
 from datetime import datetime
 
 
-def log_message(message):
-  return f'{datetime.now()} - {message}'
+def log_message(message, log_level):
+  return f'{datetime.now()} {log_level} - {message}'
 
 def build_headers(onspring_token=None):
+  # This can be extended upon to build up more headers.
+  # It can be modified here or another function to build up just generic json objects
+  # that can be fed to a request.
 
   headers = {
     'Accept': 'application/json',
@@ -17,16 +20,6 @@ def build_headers(onspring_token=None):
     headers['X-APIKey'] = onspring_token
 
   return headers
-
-def build_params(query_params=None):
-  params = {
-    'dataFormat': 'Formatted',
-  }
-
-  if query_params:
-    params['$filter'] = query_params
-
-  return params
 
 def build_request(base_url, api_endpoint, headers, params=None, data=None, method='GET', auth=None):
   err = None
