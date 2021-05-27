@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: py-collector-service
+spec:
+  selector:
+    app: py-collector
+  ports:
+  - name: py-metrics
+    port: 8000

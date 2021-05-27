@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-collector-deployment
+  labels:
+    app: py-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: py-collector
+  template:
+    metadata:
+      labels:
+        app: py-collector
+    spec:
+      containers:
+      - name: py-collector
+        image: njmaeys/prom-py-export-temp:0.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
