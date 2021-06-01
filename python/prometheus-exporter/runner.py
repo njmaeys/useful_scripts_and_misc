@@ -12,11 +12,11 @@ def check_process():
   randone = random.randint(0, 20)
   return randone
 
-def generate_prom_metrics(rand_val, errors, client):
+def generate_prom_metrics(rand_val, process_counter, client):
   if rand_val <= 10:
-    errors.labels(client, 'failure').inc(rand_val)
+    process_counter.labels(client, 'failure').inc(rand_val)
   else:
-    errors.labels(client, 'success').inc(rand_val)
+    process_counter.labels(client, 'success').inc(rand_val)
   return
 
 
