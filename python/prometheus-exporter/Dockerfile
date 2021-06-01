@@ -12,7 +12,7 @@ ARG PATH_INFO
 ENV PATH_INFO='/metrics'
 
 # Copy the project
-COPY src/ .
+COPY ./*.py .
 
 # Run the project
-CMD ["python", "./new.py"]
+CMD ["python", "./runner.py"]

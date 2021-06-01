@@ -1,45 +1,38 @@
-import os
 import random
 import time
 import logging
 import sys
-from prometheus_client import start_http_server, Gauge
+from prometheus_client import (
+  start_http_server, 
+  Counter,
+)
 
-MY_GAUGE = Gauge('my_process', 'Check status of service', ['host', 'process'])
 
-def failures():
-  randone = random.randint(0, 10)
-  randtwo = random.randint(0, 20)
-  return [
-    {
-      'process': 'process_one',
-      'val': randone,
-    },
-    {
-      'process': 'process_two',
-      'val': randtwo,
-    },
-  ]
+def check_process():
+  randone = random.randint(0, 20)
+  return randone
 
-def generate_prom_metrics(host, failures, ge):
-  for f in failures:
-    ge.labels(host, f['process']).set(f['val'])
+def generate_prom_metrics(rand_val, errors, client):
+  if rand_val <= 10:
+    errors.labels(client, 'failure').inc(rand_val)
+  else:
+    errors.labels(client, 'success').inc(rand_val)
   return
 
 
 if __name__ == '__main__':
+  my_list = ['foo-0', 'foo-1', 'foo-3']
+
+  process_counter = Counter('my_process', 'Check status of service', ['client', 'status'])
+
   start_http_server(8000)
   logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-  print('START')
   count = 0
   while True:
     count += 1
     logging.info(f'Counter {count}')
-    ge = MY_GAUGE
-    host = os.uname()[1]
-
-    fails = failures()
-
-    generate_prom_metrics(host, fails, ge)
+    for m in my_list:
+      rand_val = check_process()
+      generate_prom_metrics(rand_val, process_counter, m)
 
     time.sleep(15)

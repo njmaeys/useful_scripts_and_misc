@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: py-collector-deployment
+  namespace: monitoring
   labels:
     app: py-collector
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: py-collector
-        image: njmaeys/prom-py-export-temp:0.0.0
+        image: njmaeys/prom-py-export-temp:0.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
