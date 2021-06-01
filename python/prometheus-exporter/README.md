@@ -1,6 +1,8 @@
 # Python Prometheus Exporter
 
 Simple example of a prometheus exporter that sends out custom metrics from a python script.
+Follow this for setting up prometheus in minikube
+- http://blog.marcnuri.com/prometheus-grafana-setup-minikube/
 
 ```
 - job_name: 'custom-python'
