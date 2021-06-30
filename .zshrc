@@ -32,6 +32,8 @@ alias k=kubectl
 
 alias kx=kubectx
 
+alias kube_all_custom_resources=kubectl get --show-kind --ignore-not-found $(kubectl api-resources --verbs=list --namespaced -o name | paste -s -d, -) $@
+
 # Connect to kube instances
 # AWS
 alias eks-dev='okta-awscli --profile dev --force --okta-profile dev && export AWS_DEFAULT_PROFILE=dev && kubectx eks-dev'
@@ -47,6 +49,11 @@ alias eks-prod-trickster='okta-awscli --profile prod --force --okta-profile prod
 alias gke-prod-trickster='gcloud config configurations activate cyderes-prod && kubectx minikube'
 
 # Rancher kubectl
+rkLogin() {
+  rancher login $(cat ~/tools/rancher-config/$1/endpoint) -t $(cat ~/tools/rancher-config/$1/bearer)
+
+}
+alias rk-login=rkLogin
 alias rk='rancher kubectl'
 ###########################################################################################################
 ###########################################################################################################
@@ -106,6 +113,17 @@ alias pi='ssh -i ~/.ssh/pi_rsa pi@192.168.86.34'
 alias salty='k exec -it -n salt saltmaster-docker-0 -- /bin/bash'
 ###########################################################################################################
 ###########################################################################################################
+# Terraform GCP
+terraformDevCredsGcp() {
+  export GOOGLE_APPLICATION_CREDENTIALS="/Users/Nate.Maeys/code/creds/cyderes-development-gcp.json"
+
+  terraform workspace select development
+  terraform workspace list
+}
+
+alias terraformDevGcp=terraformDevCredsGcp
+###########################################################################################################
+###########################################################################################################
 # Terraform Aws
 terraformDevCredsAws() {
   export AWS_ACCESS_KEY_ID=""
@@ -148,13 +166,30 @@ export PATH="$PATH:/Users/Nate.Maeys/google-could-sdk/bin"
 POS() {
 	echo piece of shit
 }
+alias OA=POS
 ###########################################################################################################
 # Virtualization
 ###########################################################################################################
 # ovftool
 export PATH=$PATH:/Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool
 ###########################################################################################################
+###########################################################################################################
+# AWS Things
+###########################################################################################################
+# Jump server
+alias jump-dev='ssh -i ~/.ssh/natemaeys natemaeys@jump.dev-cyderes.cloud'
+alias jump-prod='ssh -i ~/.ssh/natemaeys natemaeys@jump.cyderes.cloud'
+###########################################################################################################
+# Syslog Testing
+###########################################################################################################
+#Testing Syslog-TLS
+#alias syslog-tls=echo "cyderes nate test $(uuidgen)" | openssl s_client -connect $1:$2
 
+#Testing Syslog UDP
+#alias syslog-udp=echo "cyderes nate test $(uuidgen)" | nc -w 1 -u $1 $2
+
+#Testing Syslog TCP
+#alias syslog-tcp=echo "cyderes nate test $(uuidgen)" | nc -w 1 $1 $2
 ###########################################################################################################
 # EOF Things i may need/want
 ###########################################################################################################
@@ -167,3 +202,10 @@ source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+#### FIG ENV VARIABLES ####
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
+
+
