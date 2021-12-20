@@ -35,8 +35,6 @@ alias k=kubectl
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 
 alias kx=kubectx
-
-alias kube_all_custom_resources=kubectl get --show-kind --ignore-not-found $(kubectl api-resources --verbs=list --namespaced -o name | paste -s -d, -) $@
 ###########################################################################################################
 # GITHUB
 export GITHUB_USERNAME=njmaeys
